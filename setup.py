@@ -9,7 +9,7 @@ setup(
     # Needed to actually package something
     packages=['rparser'],
     # Needed for dependencies
-    install_requires=['itertools', 're'],
+    install_requires=[],
     # *strongly* suggested for sharing
     version='0.1',
     # The license can be anything you like
