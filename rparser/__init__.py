@@ -1,1 +1,1 @@
-from rparser.parser import Parser
+from parser import Parser
