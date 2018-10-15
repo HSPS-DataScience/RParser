@@ -3,7 +3,7 @@ from setuptools import setup
 setup( 
     # Needed to silence warnings (and to be a worthwhile package)
     name='RParser',
-    url='https://github.com/HSPS-DataScience/RParser'
+    url='https://github.com/HSPS-DataScience/RParser',
     author='John Wood',
     author_email='jmw.home@gmail.com',
     # Needed to actually package something
