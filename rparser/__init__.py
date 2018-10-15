@@ -1,3 +1,2 @@
-from rparser import Parser
+from parser import Parser
 
-__all__ = [Parser]
