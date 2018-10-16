@@ -9,10 +9,10 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-    def __init__(self, new_filename="../../test.Rmd"):
+    def __init__(self, r_script_path, new_filename="../../test.Rmd"):
         self.delimiter = "## "
-        self.r_script_path = "./R/template.R"
 
+        self.r_script_path = r_script_path
         self.new_filename = new_filename
 
         self.rmd_content = self.parse_script()
