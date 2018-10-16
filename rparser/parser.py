@@ -11,7 +11,7 @@ class Parser:
     """
     def __init__(self, new_filename="../../test.Rmd"):
         self.delimiter = "## "
-        self.r_script_path = "R/template.R"
+        self.r_script_path = "./R/template.R"
 
         self.new_filename = new_filename
 
