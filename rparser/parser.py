@@ -16,9 +16,10 @@ class Parser:
         # create an absolute path to the template, otherwise pathing 
         #   is relative to the module base directory and generally fails
         #   to find file 
-        package_dir = os.path.dirname(os.path.abspath(__file__))
-        self.r_script_path = os.path.join(package_dir, template_path)
-
+        # package_dir = os.path.dirname(os.path.abspath(__file__))
+        # self.r_script_path = os.path.join(package_dir, template_path)
+        self.r_script_path = template_path
+        
         self.rmd_content = self.parse_script()
 
     def write_to_new_rmd(self, new_filename="test.Rmd"):
