@@ -17,8 +17,7 @@ class Parser:
         # create an absolute path to the template, otherwise pathing 
         #   is relative to the module base directory and generally fails
         #   to find file 
-        package_dir = os.path.dirname(os.path.abspath(__file__))
-        self.r_script_path = os.path.join(package_dir, "R/template.R")
+        self.r_script_path = os.path.join(os.path.dirname(__file__), "R/template.R")
 
         self.new_filename = new_filename
 
@@ -81,5 +80,5 @@ def run_parser(new_filename="test.Rmd"):
     p = Parser(new_filename) 
     p.write_to_new_rmd()  
 
-# if __name__ == "__main__": 
-#     run_parser("test.Rmd")
+if __name__ == "__main__": 
+    run_parser("test.Rmd")
