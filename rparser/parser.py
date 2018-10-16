@@ -10,21 +10,23 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-    def __init__(self, template_path):
+
+    def __init__(self, new_filename="test.Rmd"):
         self.delimiter = "## "
 
         # create an absolute path to the template, otherwise pathing 
         #   is relative to the module base directory and generally fails
         #   to find file 
-        # package_dir = os.path.dirname(os.path.abspath(__file__))
-        # self.r_script_path = os.path.join(package_dir, template_path)
-        self.r_script_path = template_path
-        
+        package_dir = os.path.dirname(os.path.abspath(__file__))
+        self.r_script_path = os.path.join(package_dir, "template.R")
+
+        self.new_filename = new_filename
+
         self.rmd_content = self.parse_script()
 
-    def write_to_new_rmd(self, new_filename="test.Rmd"):
+    def write_to_new_rmd(self):
         """write to a new rmd file from an r script  """
-        with open(new_filename, 'w') as f:
+        with open(self.new_filename, 'w') as f:
             for line in self.rmd_content:
                 f.write(line)
 
@@ -75,6 +77,9 @@ class Parser:
         header = "```{r}"
         return f"\n{header}\n{code}\n```\n\n"
 
-# p = Parser("template.R")
-# # p.write_to_new_rmd()
-# print(p.r_script_path)
+def run_parser(new_filename="test.Rmd"): 
+    p = Parser(new_filename) 
+    p.write_to_new_rmd()  
+
+# if __name__ == "__main__": 
+#     run_parser("test.Rmd")
