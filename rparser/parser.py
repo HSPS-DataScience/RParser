@@ -1,4 +1,5 @@
 import itertools as it
+import os
 import re
 
 
@@ -9,17 +10,20 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-    def __init__(self, r_script_path="./R/template.R", new_filename):
+    def __init__(self):
         self.delimiter = "## "
 
-        self.r_script_path = r_script_path
-        self.new_filename = new_filename
+        # create an absolute path to the template, otherwise pathing 
+        #   is relative to the module base directory and generally fails
+        #   to find file 
+        package_dir = os.path.dirname(os.path.abspath(__file__))
+        self.r_script_path = os.path.join(package_dir, 'template.R')
 
         self.rmd_content = self.parse_script()
 
-    def write_to_new_rmd(self):
+    def write_to_new_rmd(self, new_filename="test.Rmd"):
         """write to a new rmd file from an r script  """
-        with open(self.new_filename, 'w') as f:
+        with open(new_filename, 'w') as f:
             for line in self.rmd_content:
                 f.write(line)
 
@@ -70,6 +74,5 @@ class Parser:
         header = "```{r}"
         return f"\n{header}\n{code}\n```\n\n"
 
-
-# parser = Parser(new_filename="../../test.Rmd")
-# parser.write_to_new_rmd()
+# p = Parser()
+# p.write_to_new_rmd()
