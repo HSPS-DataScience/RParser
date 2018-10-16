@@ -10,14 +10,14 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-    def __init__(self):
+    def __init__(self, template_path):
         self.delimiter = "## "
 
         # create an absolute path to the template, otherwise pathing 
         #   is relative to the module base directory and generally fails
         #   to find file 
         package_dir = os.path.dirname(os.path.abspath(__file__))
-        self.r_script_path = os.path.join(package_dir, 'template.R')
+        self.r_script_path = os.path.join(package_dir, template_path)
 
         self.rmd_content = self.parse_script()
 
@@ -74,5 +74,6 @@ class Parser:
         header = "```{r}"
         return f"\n{header}\n{code}\n```\n\n"
 
-# p = Parser()
-# p.write_to_new_rmd()
+# p = Parser("template.R")
+# # p.write_to_new_rmd()
+# print(p.r_script_path)
