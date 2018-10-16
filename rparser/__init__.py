@@ -1,1 +1,1 @@
-from rparser.parser import Parser
+from rparser.parser import run_parser
