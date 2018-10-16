@@ -18,7 +18,7 @@ class Parser:
         #   is relative to the module base directory and generally fails
         #   to find file 
         package_dir = os.path.dirname(os.path.abspath(__file__))
-        self.r_script_path = os.path.join(package_dir, "template.R")
+        self.r_script_path = os.path.join(package_dir, "R/template.R")
 
         self.new_filename = new_filename
 
