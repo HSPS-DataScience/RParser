@@ -9,7 +9,7 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-    def __init__(self, r_script_path, new_filename):
+    def __init__(self, r_script_path="./R/template.R", new_filename):
         self.delimiter = "## "
 
         self.r_script_path = r_script_path
@@ -29,7 +29,7 @@ class Parser:
         There are two groups in the parsed R script we are looking for:
             - Comment Blocks
                 + any line which starts with the set delimiter (## )
-                + any blank line (\n in a string format)
+                + any blank line (newline in a string format)
             - Code Blocks
                 + any line which is not a comment block is assumed to be a line of code
 
