@@ -1,4 +1,6 @@
 from setuptools import setup 
+from rparser.parser import run_parser
+
 
 setup( 
     # Needed to silence warnings (and to be a worthwhile package)
@@ -16,5 +18,5 @@ setup(
     license='',
     description='Parse an R script into Rmd using Python',
     # We will also need a readme eventually (there will be a warning)
-    long_description=open('README.md').read(),
+    long_description=open('../README.md').read(),
 )
