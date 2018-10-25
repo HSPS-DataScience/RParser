@@ -80,5 +80,3 @@ def run_parser(new_filename="test.Rmd"):
     p = Parser(new_filename) 
     p.write_to_new_rmd()  
 
-if __name__ == "__main__": 
-    run_parser("test.Rmd")

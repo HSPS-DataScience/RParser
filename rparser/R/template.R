@@ -1,8 +1,8 @@
-library(tidyverse)
-library(trelliscopejs)
-library(wordcloud)
-library(HSPSUtils) # install_github("HSPS-DataScience/HSPSUtils")
-                   # devtools::update_packages("HSPSUtils")
+## ---
+## title: REPLACE WITH TABLE NAME 
+## author: `r Sys.getenv("LOGNAME")`
+## output: html_document
+## ---
 
 knitr::opts_chunk$set(
   echo = F,
@@ -14,10 +14,20 @@ knitr::opts_chunk$set(
   cache = F
 )
 
+library(tidyverse)
+library(trelliscopejs)
+library(wordcloud)
+library(HSPSUtils) # install_github("HSPS-DataScience/HSPSUtils")
+                   # devtools::update_packages("HSPSUtils")
+
+### Read in Data 
+
 read_in_data <- handle_exceptions %decorates% function() {
   x # INSERT YOUR DATA HERE
 }
 data <- read_in_data()
+
+### Datatable 
 
 create_datetable <- handle_exceptions %decorates% function(data) {
   ## data table
@@ -32,6 +42,8 @@ create_datetable <- handle_exceptions %decorates% function(data) {
     )
 }
 create_datetable(data)
+
+### Data Summary
 
 create_data_summary <- handle_exceptions %decorates% function(data) {
   ## Data Summary
@@ -58,6 +70,8 @@ create_data_summary <- handle_exceptions %decorates% function(data) {
 }
 create_data_summary(data)
 
+### Trelliscope Bar Chart (Categorical)
+
 create_bar_chart_categorical_trelli <- handle_exceptions %decorates% function(data) {
   # for (col_names in split_type_colnames_by_num(data)) {
     data %>%
@@ -81,6 +95,8 @@ create_bar_chart_categorical_trelli <- handle_exceptions %decorates% function(da
 }
 create_bar_chart_categorical_trelli(data)
 
+### Wordcloud 
+
 create_wordcloud <- handle_exceptions %decorates% function(data) {
   # wordcloud of character variables
   data(stop_words)
@@ -96,6 +112,8 @@ create_wordcloud <- handle_exceptions %decorates% function(data) {
     with(wordcloud(word, n, max.words = 100, rot.per = 0))
 }
 create_wordcloud(data)
+
+### Histogram (Numeric)
 
 create_hist_numeric <- handle_exceptions %decorates% function(data) {
   ## histogram of all numeric variables
@@ -113,6 +131,8 @@ create_hist_numeric <- handle_exceptions %decorates% function(data) {
     theme_bw()
 }
 create_hist_numeric(data)
+
+### Time Series 
 
 create_time_series <- handle_exceptions %decorates% function(data) {
   # time series
