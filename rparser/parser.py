@@ -81,5 +81,3 @@ class Parser:
 def run_parser(new_filename="test.Rmd"): 
     p = Parser(new_filename) 
     p.write_to_new_rmd()  
-    
-run_parser()
