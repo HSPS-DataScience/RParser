@@ -4,4 +4,4 @@ Parse an R script template into Rmd using Python. For a simple package wrapper i
 ### Installation 
 * Requires `Python 3.6.5 >=`
 * `pip install git+https://github.com/HSPS-DataScience/RParser.git#egg=RParser`
-* To update RParser from github, uninstall `pip uninstall RParser` then install again
+* To update RParser from github: `pip install --upgrade git+https://github.com/HSPS-DataScience/RParser.git#egg=RParser` 
