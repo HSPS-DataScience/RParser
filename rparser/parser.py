@@ -67,7 +67,7 @@ class Parser:
     def create_comment_chunk(self, group):
         """remove delimiter from comments for final Rmd document """
         comments = self.parse_group(group)
-        return re.sub(self.delimiter, "", comments)
+        return re.sub(self.delimiter, "", comments, count=1)
 
     def create_rchunk(self, group):
         """surround code with triple tick marks for Rmd R chunks """
@@ -76,7 +76,8 @@ class Parser:
         header = "```{r}"
         return f"\n{header}\n{code}\n```\n\n"
 
+
 def run_parser(new_filename="test.Rmd"): 
     p = Parser(new_filename) 
     p.write_to_new_rmd()  
-
+    
