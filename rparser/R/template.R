@@ -20,14 +20,14 @@ library(wordcloud)
 library(HSPSUtils) # install_github("HSPS-DataScience/HSPSUtils")
                    # devtools::update_packages("HSPSUtils")
 
-### Read in Data 
+## ### Read in Data 
 
 read_in_data <- handle_exceptions %decorates% function() {
   x # INSERT YOUR DATA HERE
 }
 data <- read_in_data()
 
-### Datatable 
+## ### Datatable 
 
 create_datetable <- handle_exceptions %decorates% function(data) {
   ## data table
@@ -43,7 +43,7 @@ create_datetable <- handle_exceptions %decorates% function(data) {
 }
 create_datetable(data)
 
-### Data Summary
+## ### Data Summary
 
 create_data_summary <- handle_exceptions %decorates% function(data) {
   ## Data Summary
@@ -70,7 +70,7 @@ create_data_summary <- handle_exceptions %decorates% function(data) {
 }
 create_data_summary(data)
 
-### Trelliscope Bar Chart (Categorical)
+## ### Trelliscope Bar Chart (Categorical)
 
 create_bar_chart_categorical_trelli <- handle_exceptions %decorates% function(data) {
   # for (col_names in split_type_colnames_by_num(data)) {
@@ -95,7 +95,7 @@ create_bar_chart_categorical_trelli <- handle_exceptions %decorates% function(da
 }
 create_bar_chart_categorical_trelli(data)
 
-### Wordcloud 
+## ### Wordcloud 
 
 create_wordcloud <- handle_exceptions %decorates% function(data) {
   # wordcloud of character variables
@@ -113,7 +113,7 @@ create_wordcloud <- handle_exceptions %decorates% function(data) {
 }
 create_wordcloud(data)
 
-### Histogram (Numeric)
+## ### Histogram (Numeric)
 
 create_hist_numeric <- handle_exceptions %decorates% function(data) {
   ## histogram of all numeric variables
@@ -132,7 +132,7 @@ create_hist_numeric <- handle_exceptions %decorates% function(data) {
 }
 create_hist_numeric(data)
 
-### Time Series 
+## ### Time Series 
 
 create_time_series <- handle_exceptions %decorates% function(data) {
   # time series
