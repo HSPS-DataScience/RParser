@@ -1,4 +1,4 @@
-from template import Template
+from rparser.template import Template
 import itertools as it
 import os
 import re
