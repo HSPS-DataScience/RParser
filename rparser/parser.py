@@ -1,3 +1,4 @@
+from template import Template
 import itertools as it
 import os
 import re
@@ -11,23 +12,34 @@ class Parser:
     - Requires Python 3.6.5 >=
     """
 
-    def __init__(self, new_filename="test.Rmd"):
+    def __init__(self, template, new_filename="test.Rmd"):
+
+        # use a db template which injects data base connection R chunk  
+        self.template = template 
+
         self.delimiter = "## "
-
-        # create an absolute path to the template, otherwise pathing 
-        #   is relative to the module base directory and generally fails
-        #   to find file 
-        self.r_script_path = os.path.join(os.path.dirname(__file__), "R/template.R")
-
         self.new_filename = new_filename
 
-        self.rmd_content = self.parse_script()
+        self.template.rmd_content = self.parse_script()
 
-    def write_to_new_rmd(self):
-        """write to a new rmd file from an r script  """
-        with open(self.new_filename, 'w') as f:
-            for line in self.rmd_content:
-                f.write(line)
+    def create_comment_chunk(self, group):
+        """remove delimiter from comments for final Rmd document """
+        comments = self.parse_group(group)
+        pattern = re.compile(f"^({self.delimiter})", re.MULTILINE)
+        return re.sub(pattern, "", comments)
+
+    def create_rchunk(self, group):
+        """surround code with triple tick marks for Rmd R chunks """
+        code = self.parse_group(group)
+
+        return f"\n\n```{{r}}\n{code}\n```\n"
+
+    def parse_group(self, group): 
+        """parse quotation marks out of strings to prep for final Rmd document """
+        code = ""
+        for text in group:
+            code += text.strip('\"')
+        return code
 
     def parse_script(self):
         """parse r script based off of delimiter
@@ -43,41 +55,45 @@ class Parser:
             in the final Rmd file. All lines which start with "## " are considered
             comments which will not be included in R chunks.
         """
-        with open(self.r_script_path, "r") as f:
+        with open(self.template.template_path, "r") as f:
             new_rmd = []
 
             # divide file text into groups of code or comments
-            for key, group in it.groupby(f, lambda line: line.startswith(self.delimiter) or line == '\n'):
+            for key, group in it.groupby(f, lambda line: line.startswith(self.delimiter)):
                 if key: # comment block
                     comment_chunk = self.create_comment_chunk(list(group))
                     new_rmd.append(comment_chunk)
+
+                    # the type of data depends on the template class: 
+                    #   if there is a database_credentials.json file, then create a db_rchunk
+                    #   otherwise, just create a generic R data chunk
+                    read_data_comment = re.compile("## Read in Data") 
+                    if re.search(read_data_comment, comment_chunk) and self.template.db_creds_path:
+                        new_rmd.append(self.create_rchunk(
+                            list(self.template.create_db_rchunk())
+                        ))
+                    elif re.search(read_data_comment, comment_chunk):
+                        new_rmd.append(self.create_rchunk(
+                            list(self.template.create_read_data_rchunk())
+                        ))
+
                 if not key: # code block
                     r_chunk = self.create_rchunk(list(group))
                     new_rmd.append(r_chunk)
 
             return new_rmd
 
-    def parse_group(self, group): 
-        """parse quotation marks out of strings to prep for final Rmd document """
-        code = ""
-        for text in group:
-            code += text.strip('\"')
-        return code
-
-    def create_comment_chunk(self, group):
-        """remove delimiter from comments for final Rmd document """
-        comments = self.parse_group(group)
-        pattern = re.compile(f"^({self.delimiter})", re.MULTILINE)
-        return re.sub(pattern, "", comments)
-
-    def create_rchunk(self, group):
-        """surround code with triple tick marks for Rmd R chunks """
-        code = self.parse_group(group)
-
-        header = "```{r}"
-        return f"\n{header}\n{code}\n```\n\n"
+    def write_to_new_rmd(self):
+        """write to a new rmd file from an r script  """
+        with open(self.new_filename, 'w') as f:
+            for line in self.template.rmd_content:
+                f.write(line)
 
 
-def run_parser(new_filename="test.Rmd"): 
-    p = Parser(new_filename) 
+def run_parser(new_filename="test.Rmd", db_credentials_path=""):
+    t = Template(db_credentials_path=db_credentials_path)
+    p = Parser(t, new_filename) 
     p.write_to_new_rmd()  
+
+run_parser(db_credentials_path="db_config.json") 
+# run_parser() 

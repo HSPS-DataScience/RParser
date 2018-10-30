@@ -25,12 +25,8 @@ library(wordcloud)
 library(HSPSUtils) # install_github("HSPS-DataScience/HSPSUtils")
                    # devtools::update_packages("HSPSUtils")
 
-## ## Read in Data 
 
-read_in_data <- handle_exceptions %decorates% function() {
-  x # INSERT YOUR DATA HERE
-}
-data <- read_in_data()
+## ## Read in Data ##
 
 ## ## Datatable 
 

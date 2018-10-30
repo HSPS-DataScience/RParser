@@ -1,0 +1,9 @@
+{
+    "driver": "SQL Server Native Client 11.0",
+    "server": "hspsdata.nt.local",
+    "db_name": "SupportReports",
+    "userID": "password",
+    "password": "something",
+    "port": 1433, 
+    "table_name": "something_tbl"
+}
