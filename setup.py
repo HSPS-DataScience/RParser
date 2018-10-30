@@ -13,7 +13,7 @@ setup(
     # Needed for dependencies
     install_requires=[],
     # *strongly* suggested for sharing
-    version='0.1.1',
+    version='0.1.2',
     # The license can be anything you like
     license='',
     description='Parse an R script into Rmd using Python',
