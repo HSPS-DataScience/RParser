@@ -11,7 +11,6 @@ class Parser:
         block and not an R code chunk in the Rmd
     - Requires Python 3.6.5 >=
     """
-
     def __init__(self, template, new_filename="test.Rmd"):
 
         # use a db template which injects data base connection R chunk  
