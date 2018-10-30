@@ -1,3 +1,4 @@
+
 --- 
 title: REPLACE_WITH_TABLE_NAME  
 author: "`r Sys.getenv("LOGNAME")`"  
@@ -20,6 +21,7 @@ knitr::opts_chunk$set(
 
 
 ```
+
 ## Libraries 
 
 
@@ -36,6 +38,7 @@ library(HSPSUtils) # install_github("HSPS-DataScience/HSPSUtils")
 
 
 ```
+
 ## Read in Data ##
 
 
@@ -53,14 +56,9 @@ read_in_data_from_db <- handle_exceptions %decorates% function() {
                           Trusted_Connection = yes)
     res <- dbSendQuery(con, paste(SELECT * FROM , db_creds$table_name))
 }
-data <- read_in_data_from_db() 
+data <- read_in_data_from_db()
 ```
 
-
-```{r}
-
-
-```
 ## Datatable 
 
 
@@ -82,6 +80,7 @@ create_datetable(data)
 
 
 ```
+
 ## Data Summary
 
 
@@ -114,6 +113,7 @@ create_data_summary(data)
 
 
 ```
+
 ## Trelliscope Bar Chart (Categorical)
 
 
@@ -144,6 +144,7 @@ create_bar_chart_categorical_trelli(data)
 
 
 ```
+
 ## Wordcloud 
 
 
@@ -167,6 +168,7 @@ create_wordcloud(data)
 
 
 ```
+
 ## Histogram (Numeric)
 
 
@@ -191,6 +193,7 @@ create_hist_numeric(data)
 
 
 ```
+
 ## Time Series 
 
 

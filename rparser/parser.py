@@ -21,12 +21,13 @@ class Parser:
         self.new_filename = new_filename
 
         self.template.rmd_content = self.parse_script()
+        self.post_processing() # fix minor formatting problems following initial parsing 
 
     def create_comment_chunk(self, group):
         """remove delimiter from comments for final Rmd document """
         comments = self.parse_group(group)
         pattern = re.compile(f"^({self.delimiter})", re.MULTILINE)
-        return re.sub(pattern, "", comments)
+        return "\n" + re.sub(pattern, "", comments)
 
     def create_rchunk(self, group):
         """surround code with triple tick marks for Rmd R chunks """
@@ -82,6 +83,23 @@ class Parser:
                     new_rmd.append(r_chunk)
 
             return new_rmd
+    
+    def post_processing(self): 
+        """following parsed rscript, there are cases when multiple comment 
+        lines can create an empty r chunk represented as: 
+        ```{r}
+
+        ```
+
+        The regex matches any amount of new lines or whitespace before the 
+          of the rchunk, matches any amount of the same between triple-tick 
+          marks, and matches the last set of triple tick marks 
+        """
+        for i, group in enumerate(self.template.rmd_content):
+            # remove empty rchunks from parsed rmd_content  
+            pattern = re.compile("^\W*```{r}\n*\W```", re.MULTILINE)
+            if re.match(pattern, group): 
+                del self.template.rmd_content[i] 
 
     def write_to_new_rmd(self):
         """write to a new rmd file from an r script  """
@@ -94,6 +112,3 @@ def run_parser(new_filename="test.Rmd", db_credentials_path=""):
     t = Template(db_credentials_path=db_credentials_path)
     p = Parser(t, new_filename) 
     p.write_to_new_rmd()  
-
-run_parser(db_credentials_path="db_config.json") 
-# run_parser() 
